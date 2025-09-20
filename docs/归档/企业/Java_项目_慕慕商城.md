@@ -12,9 +12,7 @@ api: http://localhost:8083/swagger-ui.html
 
 pojo的全称: plain ordinary java object 普通java对象 是表结构的映射
 
-如果用其作为请求类 会产生多余字段 不够安全. 
-
-![img.png](img.png)
+如果用其作为请求类 会产生多余字段 不够安全.
 
 @RequestParam("value") get query 参数 
 
