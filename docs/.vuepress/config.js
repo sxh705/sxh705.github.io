@@ -47,5 +47,6 @@ export default defineUserConfig({
   bundler: viteBundler(),
   theme,
   title: 'sxh-blog',
+  lang: 'zh-CN'
 
 })
