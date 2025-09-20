@@ -26,3 +26,7 @@
 
 ![alt text](22bcaf0fc7a18ce852be5a261baf3e75.jpg)
 
+左腿 后交叉韧带断裂
+
+# 熟悉动作模式
+
