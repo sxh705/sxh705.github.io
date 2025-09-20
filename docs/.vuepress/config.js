@@ -4,8 +4,8 @@ import { hopeTheme } from "vuepress-theme-hope";
 
 const navbar = [
   '/',
-  '代码/',
   '体能/',
+  '代码/',
 ]
 
 // 定义一个函数，用来从 Markdown 内容中提取超链接的文本
