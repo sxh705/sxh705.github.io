@@ -9,10 +9,7 @@ icon: 'mdi:home'
 
 [sxh705.github.io](https://github.com/sxh705/sxh705.github.io)
 
-
 <script setup>
 import { ColorModeSwitch } from "vuepress-theme-hope/client";
 import {SearchBox} from "@vuepress/plugin-search/client";
 </script>
-
-
