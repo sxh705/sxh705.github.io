@@ -21,7 +21,7 @@ def remove_dist():
         shutil.rmtree(LOCAL_DIST)
         print('dist 目录已删除')
     else:
-        print('ℹdist 目录不存在，跳过删除')
+        print('dist 目录不存在，跳过删除')
 
 def build():
     print('正在执行 pnpm build...')
@@ -87,20 +87,16 @@ def sftp_deploy():
 
                 if remote_file_path in remote_files:
                     remote_info = remote_files[remote_file_path]
-                    if (local_info['size'] == remote_info['size'] and
-                            abs(local_info['mtime'] - remote_info['mtime']) < 60 * 24 * 30):  # 允许30天的时间差
+                    if local_info['size'] == remote_info['size'] and os.path.basename(local_file_path) != 'index.html':
                         print(f'跳过未修改文件: {remote_file_path}')
                         continue
                     else:
                         print(f'更新文件: {remote_file_path}')
                 else:
                     print(f'上传新文件: {remote_file_path}')
-
                 sftp.put(local_file_path, remote_file_path)
-                # 更新远程文件的修改时间为本地文件的修改时间
                 sftp.utime(remote_file_path, (local_info['mtime'], local_info['mtime']))
 
-        # 删除远程多余文件
         for remote_file in list(remote_files.keys()):
             if remote_file.startswith(remote):
                 local_path = os.path.join(local, os.path.relpath(remote_file, remote))

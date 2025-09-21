@@ -39,7 +39,11 @@ const theme = hopeTheme({
     },
     icon: {
       assets: 'iconify'
-    }
+    },
+  },
+  markdown: {
+    imgLazyload: true,
+    imgSize: true
   }
 })
 

@@ -8,13 +8,13 @@ qq群交流
 
 # 早会 9.30-10:30
 
-![alt text](image.png)
+![alt text](image.webp)
 
-![alt text](image-1.png)
+![alt text](image-1.webp)
 
-![alt text](image-2.png)
+![alt text](image-2.webp)
 
-![alt text](image-3.png)
+![alt text](image-3.webp)
 
 为什么家里蹲会带来精神痛苦？ - Moxos Yuri的回答 - 知乎
 https://www.zhihu.com/question/649976562/answer/3456204390
