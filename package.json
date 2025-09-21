@@ -24,6 +24,7 @@
     "vuepress-theme-hope": "2.0.0-rc.94"
   },
   "dependencies": {
-    "@vuepress/plugin-icon": "2.0.0-rc.68"
+    "@vuepress/plugin-icon": "2.0.0-rc.68",
+    "base62": "^2.0.2"
   }
 }

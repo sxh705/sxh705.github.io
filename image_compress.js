@@ -5,7 +5,7 @@ import { glob } from 'glob';
 import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
-
+import Base62 from "base62";
 const docsDir = 'docs';
 
 /**
@@ -13,10 +13,27 @@ const docsDir = 'docs';
  * @param {string} filePath - 文件的完整路径
  * @returns {Promise<string>} - 返回一个5位数的哈希字符串
  */
+async function getUniqueHashOld(filePath) {
+    const content = await fs.readFile(filePath);
+    const hash = crypto.createHash('md5').update(content).digest('hex');
+    return hash.substring(0, 6);
+}
+
+/**
+ * 根据文件内容生成一个短的唯一 Base62 哈希值
+ * @param {string} filePath - 文件的完整路径
+ * @returns {Promise<string>} - 返回一个4位数的 Base62 哈希字符串
+ */
 async function getUniqueHash(filePath) {
     const content = await fs.readFile(filePath);
     const hash = crypto.createHash('md5').update(content).digest('hex');
-    return hash.substring(0, 5);
+
+    // 将16进制哈希值的前12位转换为一个大整数
+    const hexValue = hash.substring(0, 12);
+    const intValue = parseInt(hexValue, 16);
+
+    // 将大整数转换为 Base62 字符串并截取前4位
+    return Base62.encode(intValue).substring(0, 4);
 }
 
 async function processImagesAndMarkdown() {
@@ -37,9 +54,6 @@ async function processImagesAndMarkdown() {
 
         try {
             const hash = await getUniqueHash(filePath);
-            // const fileExt = path.extname(filePath);
-            // const fileNameWithoutExt = path.basename(filePath, fileExt);
-            // const newFileName = `${fileNameWithoutExt}_${hash}.webp`;
             const dirName = path.dirname(filePath);
             // 构建新的带哈希的文件路径
             const newFileName = `${hash}.webp`;

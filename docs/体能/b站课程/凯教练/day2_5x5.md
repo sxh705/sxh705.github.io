@@ -113,7 +113,7 @@ RM的划分不是那么的绝对
 
 ### 辅项可以减少，主项不能减少
 
-![Screenshot_20250920_125334_tv.webp](Screenshot_20250920_125334_tv.webp)
+![Screenshot_20250920_125334_tv.webp](WVXH.webp)
 
 
 # 推日

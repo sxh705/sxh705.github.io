@@ -31,15 +31,15 @@
 
 # 练背
 
-![img_5.webp](img_5.webp)
+![img_5.webp](i5Qo.webp)
 
 ## 动作模式
 
-![img_6.webp](img_6.webp)
+![img_6.webp](fQbE.webp)
 
-![img_7.webp](img_7.webp)
+![img_7.webp](13NL.webp)
 
-![img_8.webp](img_8.webp)
+![img_8.webp](y9iX.webp)
 
 夹胸和飞鸟 考的是肩关节
 
@@ -47,11 +47,11 @@
 
 ## 划船动作
 
-![img_9.webp](img_9.webp)
+![img_9.webp](154v.webp)
 
 下背划船 背阔肌 大圆肌 肱三头肌 肩后束
 
-![img_10.webp](img_10.webp)
+![img_10.webp](iuya.webp)
 
 上背划船 肩后束 冈下肌
 
@@ -63,7 +63,7 @@
 
 引体向上
 
-![img_11.webp](img_11.webp)
+![img_11.webp](1haA.webp)
 
 额状面 肩关节内收
 
@@ -71,13 +71,13 @@
 
 引体向上
 
-![img_12.webp](img_12.webp)
+![img_12.webp](9tB8.webp)
 
 # 手臂
 
 ## 肱三头肌 臂屈伸
 
-![img_13.webp](img_13.webp)
+![img_13.webp](XEu3.webp)
 
 ## 肩关节伸
 
@@ -85,19 +85,19 @@
 
 ## 肱二头肌 弯举
 
-![img_14.webp](img_14.webp)
+![img_14.webp](8XM0.webp)
 
 弯举在解刨学上叫做肘关节屈
 
-![img_15.webp](img_15.webp)
+![img_15.webp](UUmC.webp)
 
 ## 三角肌
 
 推举
 
-![img_16.webp](img_16.webp)
+![img_16.webp](5Mju.webp)
 
-![img_17.webp](img_17.webp)
+![img_17.webp](1dSC.webp)
 
 肩前束次要动作 前平举
 
@@ -109,33 +109,33 @@
 
 肩后束 反向飞鸟 上背划船
 
-![img_18.webp](img_18.webp)
+![img_18.webp](3GYE.webp)
 
 大臂运动
 
-![img_19.webp](img_19.webp)
+![img_19.webp](FhBD.webp)
 
 水平面上的肩关节水平内收和外展
 
 # 练腿
 
-![img_20.webp](img_20.webp)
+![img_20.webp](qYR2.webp)
 
-![img_21.webp](img_21.webp)
+![img_21.webp](Z6Mk.webp)
 
 髋关节伸
 
 # 练臀
 
-![img_22.webp](img_22.webp)
+![img_22.webp](lEJp.webp)
 
-![img_23.webp](img_23.webp)
+![img_23.webp](3bDd.webp)
 
 髋关节外展
 
 # 腹部
 
-![img_24.webp](img_24.webp)
+![img_24.webp](vtW5.webp)
 
 与脊柱屈度有关
 
@@ -143,9 +143,52 @@
 
 仰卧起坐 做屈髋动作 练直肌 髂腰肌
 
-三分化训练计划
+# 三分化训练计划
 
 背 胸 腿
 
-![img.png](3e985.webp)
+![img.png](Dwv5.webp)
+
+需要抓紧时间 需要更好的恢复能力 更多的组数
+
+# 四分化训练计划
+
+![img.png](1hAs.webp)
+
+
+学习：抖音 b站 搜索 [ 深蹲 教 ]
+
+# 先易后难学习顺序
+
+![img.png](uTOm.webp)
+
+## 训练频率
+
+![img.png](GLZ9.webp)
+
+![img.png](Rhv0.webp)
+
+一共一个半小时 20多组
+
+![img.png](1bZn.webp)
+
+# 动作配种
+
+rm 最大重复次数
+
+![img_1.png](wy0g.webp)
+
+![img.png](102D.webp)
+
+大动作6-10次 小动作8-12次
+
+无保护情况下不要死拼力竭
+
+只有我退划船深蹲硬拉推举 使用3-5rm
+
+大多数是6-12次
+
+30-50rm力量训练，容易导致低效
+
+![img.png](vWRj.webp)
 

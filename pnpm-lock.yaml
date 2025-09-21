@@ -11,6 +11,9 @@ importers:
       '@vuepress/plugin-icon':
         specifier: 2.0.0-rc.68
         version: 2.0.0-rc.68(vuepress@2.0.0-rc.24(@vuepress/bundler-vite@2.0.0-rc.24(@types/node@24.5.2)(sass-embedded@1.92.1)(sass@1.92.1))(vue@3.5.21))
+      base62:
+        specifier: ^2.0.2
+        version: 2.0.2
     devDependencies:
       '@vuepress/bundler-vite':
         specifier: 2.0.0-rc.24
@@ -1282,6 +1285,10 @@ packages:
 
   balloon-css@1.2.0:
     resolution: {integrity: sha512-urXwkHgwp6GsXVF+it01485Z2Cj4pnW02ICnM0TemOlkKmCNnDLmyy+ZZiRXBpwldUXO+aRNr7Hdia4CBvXJ5A==}
+
+  base62@2.0.2:
+    resolution: {integrity: sha512-FLoAQzMpmdDBei0u7fUAQzVCxoH6g4pueCIuGDoCZVZCiCeW4qTKpEGB79jkS15VB8b/5EIHc4R+WSKTByM+dw==}
+    engines: {node: '>=6.0.0'}
 
   baseline-browser-mapping@2.8.6:
     resolution: {integrity: sha512-wrH5NNqren/QMtKUEEJf7z86YjfqW/2uw3IL3/xpqZUC95SSVIFXYQeeGjL6FT/X68IROu6RMehZQS5foy2BXw==}
@@ -3862,6 +3869,8 @@ snapshots:
   bail@2.0.2: {}
 
   balloon-css@1.2.0: {}
+
+  base62@2.0.2: {}
 
   baseline-browser-mapping@2.8.6: {}
 
