@@ -9,6 +9,8 @@
 
 [饮食计划 好人松松](https://www.bilibili.com/video/BV1zu4m1N76R)
 
+【可任意分享】健身Excel超级套表（作者：B站好人松松）25年8月最新版.xlsx
+
 <a href="./【可任意分享】健身Excel超级套表（作者：B站好人松松）25年8月最新版.xlsx">
 excel饮食计划表</a>
 
