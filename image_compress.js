@@ -9,17 +9,6 @@ import Base62 from "base62";
 const docsDir = 'docs';
 
 /**
- * 根据文件内容生成一个短的唯一哈希值
- * @param {string} filePath - 文件的完整路径
- * @returns {Promise<string>} - 返回一个5位数的哈希字符串
- */
-async function getUniqueHashOld(filePath) {
-    const content = await fs.readFile(filePath);
-    const hash = crypto.createHash('md5').update(content).digest('hex');
-    return hash.substring(0, 6);
-}
-
-/**
  * 根据文件内容生成一个短的唯一 Base62 哈希值
  * @param {string} filePath - 文件的完整路径
  * @returns {Promise<string>} - 返回一个4位数的 Base62 哈希字符串
