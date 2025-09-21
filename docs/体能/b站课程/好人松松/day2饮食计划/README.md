@@ -1,5 +1,10 @@
 # day2饮食计划
 
+# 苏欣昊的饮食计划
+
+![img.png](EBNk.webp)
+
+
 视频来源：
 
 [饮食计划 好人松松](https://www.bilibili.com/video/BV1zu4m1N76R)
@@ -118,6 +123,8 @@ excel饮食计划表</a>
 # 非力训日
 
 不要合并两餐
+
+# 苏欣昊的饮食计划
 
 ![img.png](EBNk.webp)
 
