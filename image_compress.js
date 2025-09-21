@@ -11,12 +11,12 @@ const docsDir = 'docs';
 /**
  * 根据文件内容生成一个短的唯一哈希值
  * @param {string} filePath - 文件的完整路径
- * @returns {Promise<string>} - 返回一个8位数的哈希字符串
+ * @returns {Promise<string>} - 返回一个5位数的哈希字符串
  */
 async function getUniqueHash(filePath) {
     const content = await fs.readFile(filePath);
     const hash = crypto.createHash('md5').update(content).digest('hex');
-    return hash.substring(0, 8);
+    return hash.substring(0, 5);
 }
 
 async function processImagesAndMarkdown() {
