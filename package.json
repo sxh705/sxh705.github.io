@@ -9,7 +9,7 @@
     "clean-dev": "vuepress dev docs --clean-cache",
     "dev": "vuepress dev docs",
     "update-package": "pnpm dlx vp-update",
-    "deploy": "node image_compress.js && C:\\Code\\ConstrutionAdmin\\cons_day1\\cons_day1\\venv\\Scripts\\python deploy.py",
+    "dp": "node image_compress.js && C:\\Code\\ConstrutionAdmin\\cons_day1\\cons_day1\\venv\\Scripts\\python deploy.py",
     "process_image": "node image_compress.js"
   },
   "devDependencies": {
