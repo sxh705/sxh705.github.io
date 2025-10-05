@@ -1,0 +1,1 @@
+每个公式加上$符号，类似这样$\arctan x = x - \dfrac{x^3}{3} + \dfrac{x^5}{5} - \cdots$，输出markdown代码块给我

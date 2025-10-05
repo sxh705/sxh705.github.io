@@ -1,4 +1,9 @@
+
 # day1 考研数学 张宇
+
+# 内置浏览器 打开 命令面板 (⇧+Ctrl/⌘+P) 然后输入 Simple Browser: Show。
+
+http://117.72.210.237:8396/
 
 ## 第一题 
 
@@ -82,3 +87,108 @@ k = 0，函数为常数
 参数讨论： 含参数的问题是考研的重点。
 综合应用： 这些知识点经常与其他知识点结合起来考察，例如不等式、方程、数列等。
 希望这些内容对你有所帮助！ 如果你有具体的问题，可以随时提出。
+
+## 第五题
+
+答案 x / sqrt(1 + (n + 1)x^2)
+
+# 数列极限
+
+## 极限的保号性是指：如果一个数列（或函数）在某点的极限存在且不为零，那么在该点附近，数列（或函数）的符号与极限的符号相同。
+
+具体来说，设数列 {an} 的极限为 A，且 A ≠ 0，则存在正整数 N，使得当 n > N 时，an 的符号与 A 相同。
+对于函数也是类似：若 limₓ→ₓ₀ f(x) = A ≠ 0，则存在 δ > 0，使得当 0 < |x - x₀| < δ 时，f(x) 的符号与 A 相同。
+
+简要总结：
+极限的保号性说明了极限不为零时，数列（或函数）在趋近于极限点的过程中不会改变符号
+
+## 2.5
+
+
+## 常见等价无穷小 数列极限
+
+### ((1+x)^a - 1 = ax)
+
+聊天
+
+## 常见等价无穷小（$x \to 0$）
+
+$\sin x \sim x$
+$\tan x \sim x$
+$1 - \cos x \sim \dfrac{1}{2}x^2$
+$\arcsin x \sim x$
+$\arctan x \sim x$
+$\ln(1+x) \sim x$
+$e^x - 1 \sim x$
+$(1+x)^a - 1 \sim ax$
+$a^x - 1 \sim x\ln a \quad (a>0)$
+
+---
+
+## 常见数列极限
+
+$\lim_{n \to \infty} \dfrac{1}{n} = 0$
+$\lim_{n \to \infty} \dfrac{a^n}{n!} = 0 \quad (a\ \text{为常数})$
+$\lim_{n \to \infty} \sqrt[n]{a} = 1 \quad (a>0)$
+$\lim_{n \to \infty} \left(1+\dfrac{1}{n}\right)^n = e$
+$\lim_{n \to \infty} \left(1+\dfrac{a}{n}\right)^n = e^a$
+$\lim_{n \to \infty} n^{1/n} = 1$
+$\lim_{n \to \infty} \dfrac{\ln n}{n} = 0$
+
+---
+
+## 常用泰勒展开（$x \to 0$）
+
+$e^x = 1 + x + \dfrac{x^2}{2!} + \dfrac{x^3}{3!} + \cdots$
+$\sin x = x - \dfrac{x^3}{3!} + \dfrac{x^5}{5!} - \cdots$
+$\cos x = 1 - \dfrac{x^2}{2!} + \dfrac{x^4}{4!} - \cdots$
+$\ln(1+x) = x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \cdots$
+$(1+x)^\alpha = 1 + \alpha x + \dfrac{\alpha(\alpha-1)}{2!}x^2 + \dfrac{\alpha(\alpha-1)(\alpha-2)}{3!}x^3 + \cdots$
+$\arctan x = x - \dfrac{x^3}{3} + \dfrac{x^5}{5} - \cdots$
+
+## 三阶无穷小
+
+$x - \sin x \sim \frac{1}{6}x^3 \quad (x \to 0)$
+
+$\cos x - 1 \sim -\frac{1}{2}x^2 \quad (x \to 0)$
+
+$\tan x - x \sim \frac{1}{3}x^3 \quad (x \to 0)$
+
+$\sin x - x + \frac{1}{6}x^3 \sim o(x^3) \quad (x \to 0)$
+
+$\tan x - x - \frac{1}{3}x^3 \sim o(x^3) \quad (x \to 0)$
+
+$\cos x - 1 + \frac{1}{2}x^2 \sim o(x^2) \quad (x \to 0)$
+
+### 夹逼准则
+
+最大最小值
+
+![alt text](vOdt.webp)
+
+![alt text](WdTh.webp)
+
+n趋于无穷大 sqrt[n]{n} = 1
+
+## 2.9 数学归纳法
+
+### 交叉相乘 因式分解
+
+发现结果与2有关
+
+![alt text](1423.webp)
+
+第一项比2小
+
+第n项比2小 且 第n+1项比2小
+
+证明每一项都比2小
+
+![alt text](S5sI.webp)
+
+两端取极限 A = arctanA
+
+A = 0
+
+两端取取极限法找极限值
+
