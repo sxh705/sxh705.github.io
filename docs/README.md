@@ -9,4 +9,4 @@ icon: 'mdi:home'
 
 [部署地址](https://sxh705.github.io/)
 
-[晋ICP备2025067132号](https://beian.miit.gov.cn/)
+[晋ICP备2025067132号](https://beian.miit.gov.cn/#/Integrated/index)

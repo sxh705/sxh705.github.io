@@ -1,427 +1,587 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>考研数学做题助手</title>
+    <title>sxh考研做题助手</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
+
 <body class="bg-gray-100 min-h-screen">
-    <div class="max-w-4xl mx-auto p-4">
+    <div id="app" class="max-w-4xl mx-auto p-1">
         <!-- 头部 -->
-        <div class="bg-white rounded-lg shadow-md p-8 mb-6">
-            <h1 class="text-3xl font-bold text-gray-900 text-center mb-2">考研数学做题助手</h1>
-            <p class="text-gray-600 text-center">极简策略：3-5分钟定生死，精准补漏，高效提升</p>
+        <div class="bg-white rounded-lg shadow-md p-1 mb-1">
             <div class="text-center mt-4">
-                <div class="flex items-center justify-center gap-2 mb-2">
+                <div class="flex items-center justify-center gap-1 mb-1">
                     <span class="text-gray-600 text-sm">设备ID:</span>
-                    <input type="text" id="deviceIdInput" class="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500" placeholder="输入设备ID">
-                    <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors" onclick="updateDeviceId()">设置</button>
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors" onclick="syncData()">同步数据</button>
-                    <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors" onclick="generateNewDeviceId()">生成新ID</button>
-                </div>
-                <div class="text-gray-500 text-xs mt-1">
-                    提示：相同设备ID的数据会自动同步，可用于多设备访问
+                    <input type="text" v-model="deviceIdInput"
+                        class="px-1 py-1 w-[30vw] border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500"
+                        placeholder="输入设备ID">
+                    <button
+                        class="bg-gray-200 hover:bg-green-300 text-white px-1 py-1 rounded text-sm transition-colors"
+                        @click="updateDeviceId">设置</button>
+                    <button class="bg-gray-200 hover:bg-green-300 text-white px-1 py-1 rounded text-sm transition-colors"
+                        @click="syncData">同步</button>
+                    <button class="bg-gray-200 hover:bg-green-300 text-white px-1 py-1 rounded text-sm transition-colors"
+                        @click="generateNewDeviceId">新ID</button>
                 </div>
             </div>
         </div>
 
         <!-- 计时器部分 -->
-        <div class="bg-white rounded-lg shadow-md p-8 mb-6">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-2">做题计时器</h2>
-            
+        <div class="bg-white rounded-lg shadow-md p-1 mb-1">
             <div class="text-center">
-                <div class="text-6xl font-mono font-bold text-gray-900 mb-6" id="timerDisplay">05:00</div>
-                
+                <div class="text-xl font-mono mb-1"
+                    :class="timeLeft <= 30 && timeLeft > 0 ? 'text-red-600 animate-pulse' : 'text-gray-900'">{{
+                    timerDisplay }}</div>
+
                 <!-- 时间预设 -->
-                <div class="mb-6">
-                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2 mb-2 transition-colors" onclick="setTimer(3)">3分钟</button>
-                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2 mb-2 transition-colors" onclick="setTimer(5)">5分钟</button>
-                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2 mb-2 transition-colors" onclick="setTimer(8)">8分钟</button>
-                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2 mb-2 transition-colors" onclick="setTimer(10)">10分钟</button>
-                </div>
-
-                <!-- 控制按钮 -->
-                <div class="mb-4">
-                    <button class="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded mr-3 transition-colors" id="startBtn" onclick="startTimer()">开始做题</button>
-                    <button class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded mr-3 transition-colors" id="stopBtn" onclick="stopTimer()">停止</button>
-                    <button class="bg-gray-400 hover:bg-gray-500 text-white px-6 py-3 rounded transition-colors" onclick="resetTimer()">重置</button>
-                </div>
-
-                <div class="text-gray-500 text-sm">
-                    提示：时间到了会有声音提醒，超过1分钟没思路就立即停止！
+                <div class="mb-1">
+                    <button v-for="minute in [15, 30, 45]" :key="minute"
+                        class="bg-gray-200 hover:bg-gray-200 text-gray-800 px-1 py-1 rounded mr-2 mb-1 transition-colors"
+                        @click="setTimer(minute)">{{ minute }}m</button>
+                    <button class="bg-gray-200 hover:bg-gray-200 text-white px-1 py-1 rounded mr-3 transition-colors"
+                        :class="{ 'opacity-50 cursor-not-allowed': isRunning }" :disabled="isRunning"
+                        @click="startTimer">{{ isRunning ? '进行中...' : '启' }}</button>
+                    <button class="bg-gray-200 hover:bg-gray-200 text-white px-1 py-1 rounded mr-3 transition-colors"
+                        @click="stopTimer">停</button>
+                    <button class="bg-gray-200 hover:bg-gray-200 text-white px-1 py-1 rounded transition-colors"
+                        @click="resetTimer">复</button>
                 </div>
             </div>
         </div>
 
         <!-- 记录部分 -->
-        <div class="bg-white rounded-lg shadow-md p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-2">学习记录</h2>
-            
+        <div class="bg-white rounded-lg shadow-md p-1">
+            <h2 class="text-xl text-gray-900 mb-1 border-b border-gray-200 pb-2">学习记录</h2>
             <!-- 记录表单 -->
-            <div class="bg-gray-50 rounded-lg p-6 mb-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">题目描述：</label>
-                        <input type="text" id="questionTitle" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500" placeholder="例如：高数第三章导数应用题">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">用时（分钟）：</label>
-                        <input type="number" id="timeSpent" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500" placeholder="实际用时" min="1">
-                    </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-medium mb-2">状态：</label>
-                    <select id="questionStatus" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500">
-                        <option value="completed">独立完成</option>
-                        <option value="stuck">卡住了</option>
-                        <option value="review">需要复习</option>
-                    </select>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-medium mb-2">学习笔记：</label>
-                    <textarea id="notes" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500" placeholder="记录关键考点、解题思路、错误原因等..."></textarea>
-                </div>
-                
-                <button class="bg-black hover:bg-gray-800 text-white px-6 py-2 rounded transition-colors" onclick="addRecord()">
-                    <span id="addBtnText">添加记录</span>
-                    <span id="addBtnLoading" class="hidden">添加中...</span>
+            <div class="bg-gray-50 rounded-lg p-1 mb-1">
+                <input type="text" v-model="form.title"
+                    class="w-[25vw] max-w-[200px] py-1 mr-1 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
+                    placeholder="描述">
+                <input type="number" v-model="form.timeSpent"
+                    class="w-[25vw] max-w-[200px] px-1 py-1 mr-1 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
+                    placeholder="用时 分" min="1">
+                <button @click="form.status = 'completed'"
+                    class="bg-gray-200 disabled:bg-gray-500 text-white px-1 py-1 rounded transition-colors"
+                    :disabled="form.status === 'completed'">完成</button>
+                <button @click="form.status = 'stuck'"
+                    class="bg-gray-200 disabled:bg-gray-500 text-white px-1 py-1 rounded transition-colors"
+                    :disabled="form.status === 'stuck'">卡住</button>
+                <button @click="form.status = 'review'"
+                    class="bg-gray-200 disabled:bg-gray-500 text-white px-1 py-1 rounded transition-colors"
+                    :disabled="form.status === 'review'">复习</button>
+                <button class="text-base ml-2 bg-gray-200 hover:bg-gray-200 text-white px-1 py-1 rounded transition-colors"
+                    :disabled="loading" @click="addRecord">
+                    {{ loading ? '添加中...' : (editingRecord ? '更' : '添') }}
                 </button>
+                <button v-if="editingRecord"
+                    class="bg-gray-200 hover:bg-gray-200 text-white px-1 py-1 rounded ml-2 transition-colors"
+                    @click="cancelEdit">消</button>
+                <div class="mt-1">
+                    <textarea v-model="form.notes" rows="3"
+                        class="w-full px-1 py-1 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
+                        placeholder="记录关键考点、解题思路、错误原因等..."></textarea>
+                </div>
             </div>
 
             <!-- 统计信息 -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="bg-gray-900 text-white p-6 rounded-lg text-center">
-                    <div class="text-3xl font-bold mb-2" id="totalQuestions">-</div>
-                    <div class="text-gray-300">总题数</div>
+            <div class="bg-gray-200 rounded-lg grid grid-cols-3 gap-1 mb-1">
+                <div class="bg-gray-200 text-white p-1 rounded-lg">
+                    <div class="mb-1">总数{{ stats.total || 0 }}题</div>
                 </div>
-                <div class="bg-gray-700 text-white p-6 rounded-lg text-center">
-                    <div class="text-3xl font-bold mb-2" id="completedQuestions">-</div>
-                    <div class="text-gray-300">完成题数</div>
+                <div class="bg-gray-200 text-white p-1 rounded-lg">
+                    <div class="mb-1">完成{{ stats.completed || 0 }}题</div>
                 </div>
-                <div class="bg-gray-500 text-white p-6 rounded-lg text-center">
-                    <div class="text-3xl font-bold mb-2" id="averageTime">-</div>
-                    <div class="text-gray-300">平均用时(分)</div>
+                <div class="bg-gray-200 text-white p-1 rounded-lg">
+                    <div class="mb-1">平均{{ stats.avg_time || 0 }}分</div>
                 </div>
             </div>
-
-            <div class="flex justify-between mb-4">
-                <div>
-                    <span class="text-gray-500 text-sm">数据实时同步到云端，支持多设备访问</span>
-                </div>
-                <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm transition-colors" onclick="clearAllRecords()">清空所有记录</button>
-            </div>
-
             <!-- 记录列表 -->
-            <div class="max-h-96 overflow-y-auto" id="recordsList">
-                <div class="text-center text-gray-500 py-12">
-                    <div class="animate-spin inline-block w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full"></div>
+            <div class="overflow-y-auto">
+                <div v-if="loadingRecords" class="text-center text-gray-500 py-12">
+                    <div
+                        class="animate-spin inline-block w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full">
+                    </div>
                     <div class="mt-2">正在加载数据...</div>
                 </div>
+
+                <div v-else-if="records.length === 0" class="text-center text-gray-500 py-12">
+                    还没有学习记录，开始第一道题吧！
+                </div>
+
+                <div v-else v-for="record in records" :key="record.id"
+                    class="border border-gray-200 rounded-lg p-1 mb-1 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-medium text-gray-900">
+                            {{ record.title }}{{ record.device_id !== currentDeviceId ? ' 📱' : '' }}
+                        </h3>
+                        <div class="flex items-center gap-1">
+                            <span class="text-gray-500 text-sm">{{ formatDate(record.created_at) }}</span>
+                            <button class="text-blue-600 hover:text-blue-800 text-sm"
+                                @click="editRecord(record)">编辑</button>
+                            <button class="text-red-600 hover:text-red-800 text-sm"
+                                @click="deleteRecord(record.id)">删除</button>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1 mb-1">
+                        <span class="px-1 py-1 text-xs rounded" :class="getStatusStyle(record.status)">{{
+                            getStatusText(record.status) }}</span>
+                        <span class="text-gray-600 text-sm">用时: {{ record.time_spent }}分钟</span>
+                    </div>
+                    <div v-if="record.notes" class="text-gray-700 text-sm mt-2 whitespace-pre-wrap">{{ record.notes }}</div>
+                </div>
+            </div>
+
+            <div class="flex justify-between mb-1">
+                <button class="bg-red-600 hover:bg-red-900 text-white px-1 py-1 rounded text-sm transition-colors"
+                    @click="clearAllRecords">清空</button>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        // 导入API
-        import MathStudyAPI from './api.js';
-        
-        // 获取或设置默认设备ID
-        function getDefaultDeviceId() {
-            // 从localStorage获取保存的设备ID
-            const savedDeviceId = localStorage.getItem('mathStudyDeviceId');
-            if (savedDeviceId) {
-                return savedDeviceId;
-            }
-            
-            // 如果没有保存的ID，使用默认值1
-            const defaultId = '1';
-            localStorage.setItem('mathStudyDeviceId', defaultId);
-            return defaultId;
-        }
-        
-        // 初始化API（使用保存的或默认的设备ID）
-        let mathAPI = new MathStudyAPI(getDefaultDeviceId());
-        
-        // 初始化设备ID输入框
-        function initDeviceIdInput() {
-            const deviceIdInput = document.getElementById('deviceIdInput');
-            deviceIdInput.value = mathAPI.deviceId;
-        }
+    <script>
+        // API类和函数（合并后的代码）
+        const executeQuery = async (sql, params) => {
+            let host = "117.72.210.237"
+            // host = "localhost"
+            const baseUrl = `http://${host}:8000/eyuLrHrTb6JFJk1V`;
+            const url = `${baseUrl}/query`;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: sql,
+                        params: params || []
+                    }),
+                    timeout: 5000
+                });
 
-        // 更新设备ID
-        window.updateDeviceId = function() {
-            const newDeviceId = document.getElementById('deviceIdInput').value.trim();
-            if (!newDeviceId) {
-                alert('请输入设备ID！');
-                return;
-            }
-            
-            // 重新初始化API实例
-            mathAPI = new MathStudyAPI(newDeviceId);
-            
-            // 永久保存到本地存储
-            localStorage.setItem('mathStudyDeviceId', newDeviceId);
-            
-            // 重新加载数据
-            loadData();
-            
-            alert('设备ID已保存并永久生效！');
-        };
-
-        // 生成新的设备ID
-        window.generateNewDeviceId = function() {
-            const newDeviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            document.getElementById('deviceIdInput').value = newDeviceId;
-            
-            // 自动应用新ID并永久保存
-            mathAPI = new MathStudyAPI(newDeviceId);
-            localStorage.setItem('mathStudyDeviceId', newDeviceId);
-            
-            loadData();
-            
-            alert('已生成并保存新的设备ID！');
-        };
-
-        // 计时器相关变量
-        let timer = null;
-        let timeLeft = 300; // 默认5分钟
-        let isRunning = false;
-
-        // 音频提示
-        function playSound() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 1);
-        }
-
-        // 全局函数定义
-        window.setTimer = function(minutes) {
-            if (!isRunning) {
-                timeLeft = minutes * 60;
-                updateDisplay();
-            }
-        };
-
-        window.startTimer = function() {
-            if (!isRunning && timeLeft > 0) {
-                isRunning = true;
-                document.getElementById('startBtn').textContent = '进行中...';
-                document.getElementById('startBtn').disabled = true;
-                document.getElementById('startBtn').classList.add('opacity-50', 'cursor-not-allowed');
-                
-                timer = setInterval(() => {
-                    timeLeft--;
-                    updateDisplay();
-                    
-                    if (timeLeft <= 0) {
-                        window.stopTimer();
-                        playSound();
-                        alert('时间到！根据策略，如果卡住了就立即停止，去查阅资料或听课！');
-                    }
-                }, 1000);
-            }
-        };
-
-        window.stopTimer = function() {
-            if (isRunning) {
-                clearInterval(timer);
-                isRunning = false;
-                document.getElementById('startBtn').textContent = '开始做题';
-                document.getElementById('startBtn').disabled = false;
-                document.getElementById('startBtn').classList.remove('opacity-50', 'cursor-not-allowed');
-                
-                // 自动填入用时
-                const usedTime = Math.ceil((300 - timeLeft) / 60);
-                if (usedTime > 0) {
-                    document.getElementById('timeSpent').value = usedTime;
+                if (!response.ok) {
+                    console.error(`HTTP error! status: ${response}`);
+                    return await response.json()
                 }
-            }
-        };
-
-        window.resetTimer = function() {
-            window.stopTimer();
-            timeLeft = 300;
-            updateDisplay();
-        };
-
-        // 更新显示
-        function updateDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            const timerDisplay = document.getElementById('timerDisplay');
-            timerDisplay.textContent = display;
-            
-            // 最后30秒警告
-            if (timeLeft <= 30 && timeLeft > 0) {
-                timerDisplay.classList.add('text-red-600', 'animate-pulse');
-                timerDisplay.classList.remove('text-gray-900');
-            } else {
-                timerDisplay.classList.remove('text-red-600', 'animate-pulse');
-                timerDisplay.classList.add('text-gray-900');
-            }
-        }
-
-        // 记录相关功能（修改为使用API）
-        let records = [];
-
-        // 添加记录
-        window.addRecord = async function() {
-            const title = document.getElementById('questionTitle').value.trim();
-            const timeSpent = document.getElementById('timeSpent').value;
-            const status = document.getElementById('questionStatus').value;
-            const notes = document.getElementById('notes').value.trim();
-            
-            if (!title || !timeSpent) {
-                alert('请填写题目描述和用时！');
-                return;
-            }
-            
-            // 显示加载状态
-            document.getElementById('addBtnText').classList.add('hidden');
-            document.getElementById('addBtnLoading').classList.remove('hidden');
-            
-            try {
-                const record = {
-                    title: title,
-                    timeSpent: parseInt(timeSpent),
-                    status: status,
-                    notes: notes
-                };
-                
-                await mathAPI.addRecord(record);
-                
-                // 清空表单
-                document.getElementById('questionTitle').value = '';
-                document.getElementById('timeSpent').value = '';
-                document.getElementById('notes').value = '';
-                
-                // 重新加载数据
-                await loadData();
-                
+                return await response.json();
             } catch (error) {
-                alert('添加记录失败，请检查网络连接！');
-                console.error(error);
-            } finally {
-                // 恢复按钮状态
-                document.getElementById('addBtnText').classList.remove('hidden');
-                document.getElementById('addBtnLoading').classList.add('hidden');
+                console.error('Fetch request failed:', error);
+                throw error;
             }
         };
 
-        // 加载数据
-        async function loadData() {
-            try {
-                // 并行加载记录和统计
-                const [recordsResult, stats] = await Promise.all([
-                    mathAPI.getRecords(),
-                    mathAPI.getStats()
-                ]);
-                
-                records = recordsResult;
-                displayRecords();
-                updateStats(stats);
-                
-            } catch (error) {
-                console.error('加载数据失败:', error);
-                document.getElementById('recordsList').innerHTML = 
-                    '<div class="text-center text-red-500 py-12">加载失败，请检查网络连接并刷新页面</div>';
+        class MathStudyAPI {
+            constructor(deviceId = null) {
+                this.deviceId = deviceId || this.getOrSetDefaultDeviceId();
             }
-        }
 
-        // 同步数据
-        window.syncData = async function() {
-            await loadData();
-        };
-
-        // 显示记录
-        function displayRecords() {
-            const recordsList = document.getElementById('recordsList');
-            
-            if (records.length === 0) {
-                recordsList.innerHTML = '<div class="text-center text-gray-500 py-12">还没有学习记录，开始第一道题吧！</div>';
-                return;
+            getOrSetDefaultDeviceId() {
+                let deviceId = localStorage.getItem('mathStudyDeviceId');
+                if (!deviceId) {
+                    deviceId = '1';
+                    localStorage.setItem('mathStudyDeviceId', deviceId);
+                }
+                return deviceId;
             }
-            
-            recordsList.innerHTML = records.map(record => {
-                const statusStyles = {
-                    'completed': 'bg-green-100 text-green-800',
-                    'stuck': 'bg-red-100 text-red-800',
-                    'review': 'bg-yellow-100 text-yellow-800'
-                };
-                
-                const statusText = {
-                    'completed': '独立完成',
-                    'stuck': '卡住了',
-                    'review': '需要复习'
-                };
-                
-                // 格式化时间
-                const date = new Date(record.created_at).toLocaleString('zh-CN');
-                const deviceMark = record.device_id === mathAPI.deviceId ? '' : ' 📱';
-                
-                return `
-                    <div class="border border-gray-200 rounded-lg p-4 mb-3 hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-medium text-gray-900">${record.title}${deviceMark}</h3>
-                            <span class="text-gray-500 text-sm">${date}</span>
-                        </div>
-                        <div class="flex items-center gap-4 mb-2">
-                            <span class="px-2 py-1 text-xs rounded ${statusStyles[record.status]}">${statusText[record.status]}</span>
-                            <span class="text-gray-600 text-sm">用时: ${record.time_spent}分钟</span>
-                        </div>
-                        ${record.notes ? `<div class="text-gray-700 text-sm mt-2">${record.notes}</div>` : ''}
-                    </div>
+
+            updateDeviceId(newDeviceId) {
+                this.deviceId = newDeviceId;
+                localStorage.setItem('mathStudyDeviceId', newDeviceId);
+            }
+
+            async addRecord(record) {
+                const sql = `
+                    INSERT INTO math_study_records (title, time_spent, status, notes, device_id)
+                    VALUES (?, ?, ?, ?, ?)
                 `;
-            }).join('');
-        }
+                const params = [
+                    record.title,
+                    record.timeSpent,
+                    record.status,
+                    record.notes || '',
+                    this.deviceId
+                ];
 
-        // 更新统计信息
-        function updateStats(stats) {
-            document.getElementById('totalQuestions').textContent = stats.total || 0;
-            document.getElementById('completedQuestions').textContent = stats.completed || 0;
-            document.getElementById('averageTime').textContent = stats.avg_time || 0;
-        }
-
-        // 清空所有记录
-        window.clearAllRecords = async function() {
-            if (confirm('确定要清空所有学习记录吗？此操作不可恢复！')) {
                 try {
-                    await mathAPI.clearAllRecords();
-                    await loadData();
+                    const result = await executeQuery(sql, params);
+                    return result;
                 } catch (error) {
-                    alert('清空失败，请检查网络连接！');
-                    console.error(error);
+                    console.error('添加记录失败:', error);
+                    throw error;
                 }
             }
-        };
 
-        // 页面加载时初始化
-        window.onload = async function() {
-            // 设备ID已在创建mathAPI实例时处理，确保永久保存
-            initDeviceIdInput();
-            updateDisplay();
-            await loadData();
-        };
+            async updateRecord(recordId, record) {
+                const sql = `
+                    UPDATE math_study_records 
+                    SET title = ?, time_spent = ?, status = ?, notes = ?, updated_at = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                `;
+                const params = [
+                    record.title,
+                    record.timeSpent,
+                    record.status,
+                    record.notes || '',
+                    recordId
+                ];
+
+                try {
+                    const result = await executeQuery(sql, params);
+                    return result;
+                } catch (error) {
+                    console.error('更新记录失败:', error);
+                    throw error;
+                }
+            }
+
+            async deleteRecord(recordId) {
+                const sql = `DELETE FROM math_study_records WHERE id = ?`;
+                const params = [recordId];
+
+                try {
+                    const result = await executeQuery(sql, params);
+                    return result;
+                } catch (error) {
+                    console.error('删除记录失败:', error);
+                    throw error;
+                }
+            }
+
+            async getRecords() {
+                const sql = `
+                    SELECT id, title, time_spent, status, notes, created_at, device_id
+                    FROM math_study_records
+                    ORDER BY created_at DESC
+                    LIMIT 100
+                `;
+
+                try {
+                    const result = await executeQuery(sql, []);
+                    return result.results || [];
+                } catch (error) {
+                    console.error('获取记录失败:', error);
+                    throw error;
+                }
+            }
+
+            async clearAllRecords() {
+                const sql = `DELETE FROM math_study_records`;
+
+                try {
+                    const result = await executeQuery(sql, []);
+                    return result;
+                } catch (error) {
+                    console.error('清空记录失败:', error);
+                    throw error;
+                }
+            }
+
+            async getStats() {
+                const sql = `
+                    SELECT 
+                        COUNT(*) as total,
+                        COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed,
+                        ROUND(AVG(time_spent)) as avg_time
+                    FROM math_study_records
+                `;
+
+                try {
+                    const result = await executeQuery(sql, []);
+                    const stats = result.results && result.results[0] ? result.results[0] : {
+                        total: 0,
+                        completed: 0,
+                        avg_time: 0
+                    };
+                    return stats;
+                } catch (error) {
+                    console.error('获取统计失败:', error);
+                    return { total: 0, completed: 0, avg_time: 0 };
+                }
+            }
+        }
+
+        // Vue应用
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    // 设备管理
+                    deviceIdInput: '',
+                    currentDeviceId: '',
+                    mathAPI: null,
+
+                    // 计时器
+                    timer: null,
+                    timeLeft: 15 * 60,
+                    initialTime: 15 * 60, // 添加初始时间记录
+                    isRunning: false,
+
+                    // 记录管理
+                    records: [],
+                    stats: {},
+                    form: {
+                        title: '',
+                        timeSpent: '',
+                        status: 'completed',
+                        notes: ''
+                    },
+                    editingRecord: null,
+                    loading: false,
+                    loadingRecords: true
+                }
+            },
+
+            computed: {
+                timerDisplay() {
+                    const minutes = Math.floor(this.timeLeft / 60);
+                    const seconds = this.timeLeft % 60;
+                    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            },
+
+            methods: {
+                // 设备管理
+                getDefaultDeviceId() {
+                    const savedDeviceId = localStorage.getItem('mathStudyDeviceId');
+                    if (savedDeviceId) {
+                        return savedDeviceId;
+                    }
+                    const defaultId = '1';
+                    localStorage.setItem('mathStudyDeviceId', defaultId);
+                    return defaultId;
+                },
+
+                updateDeviceId() {
+                    const newDeviceId = this.deviceIdInput.trim();
+                    if (!newDeviceId) {
+                        alert('请输入设备ID！');
+                        return;
+                    }
+
+                    this.mathAPI = new MathStudyAPI(newDeviceId);
+                    this.currentDeviceId = newDeviceId;
+                    localStorage.setItem('mathStudyDeviceId', newDeviceId);
+                    this.loadData();
+                    alert('设备ID已保存并永久生效！');
+                },
+
+                generateNewDeviceId() {
+                    const newDeviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    this.deviceIdInput = newDeviceId;
+                    this.mathAPI = new MathStudyAPI(newDeviceId);
+                    this.currentDeviceId = newDeviceId;
+                    localStorage.setItem('mathStudyDeviceId', newDeviceId);
+                    this.loadData();
+                    alert('已生成并保存新的设备ID！');
+                },
+
+                // 计时器
+                setTimer(minutes) {
+                    if (!this.isRunning) {
+                        this.timeLeft = minutes * 60;
+                        this.initialTime = minutes * 60; // 记录初始设置的时间
+                    }
+                },
+
+                startTimer() {
+                    if (!this.isRunning && this.timeLeft > 0) {
+                        this.isRunning = true;
+                        this.timer = setInterval(() => {
+                            this.timeLeft--;
+                            if (this.timeLeft <= 0) {
+                                this.stopTimer();
+                                this.playSound();
+                                alert('时间到！根据策略，如果卡住了就立即停止，去查阅资料或听课！');
+                            }
+                        }, 1000);
+                    }
+                },
+
+                stopTimer() {
+                    if (this.isRunning) {
+                        clearInterval(this.timer);
+                        this.isRunning = false;
+                        const usedTime = Math.ceil((this.initialTime - this.timeLeft) / 60); // 使用初始时间计算
+                        if (usedTime > 0) {
+                            this.form.timeSpent = usedTime;
+                        }
+                    }
+                },
+
+                resetTimer() {
+                    this.stopTimer();
+                    this.timeLeft = this.initialTime || 15 * 60; // 重置为初始时间，如果没有则默认15分钟
+                },
+
+                playSound() {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+
+                    oscillator.frequency.value = 800;
+                    oscillator.type = 'sine';
+
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 1);
+                },
+
+                // 记录管理
+                async addRecord() {
+                    if (!this.form.title.trim() || !this.form.timeSpent) {
+                        alert('请填写题目描述和用时！');
+                        return;
+                    }
+
+                    this.loading = true;
+
+                    try {
+                        const record = {
+                            title: this.form.title.trim(),
+                            timeSpent: parseInt(this.form.timeSpent),
+                            status: this.form.status,
+                            notes: this.form.notes.trim()
+                        };
+
+                        if (this.editingRecord) {
+                            await this.mathAPI.updateRecord(this.editingRecord.id, record);
+                            alert('记录更新成功！');
+                        } else {
+                            await this.mathAPI.addRecord(record);
+                            alert('记录添加成功！');
+                        }
+
+                        this.resetForm();
+                        await this.loadData();
+
+                    } catch (error) {
+                        alert('操作失败，请检查网络连接！');
+                        console.error(error);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                editRecord(record) {
+                    this.editingRecord = record;
+                    this.form = {
+                        title: record.title,
+                        timeSpent: record.time_spent,
+                        status: record.status,
+                        notes: record.notes || ''
+                    };
+
+                    // 滚动到表单
+                    document.querySelector('.bg-gray-50').scrollIntoView({ behavior: 'smooth' });
+                },
+
+                cancelEdit() {
+                    this.editingRecord = null;
+                    this.resetForm();
+                },
+
+                async deleteRecord(recordId) {
+                    if (confirm('确定要删除这条记录吗？')) {
+                        try {
+                            await this.mathAPI.deleteRecord(recordId);
+                            alert('记录删除成功！');
+                            await this.loadData();
+                        } catch (error) {
+                            alert('删除失败，请检查网络连接！');
+                            console.error(error);
+                        }
+                    }
+                },
+
+                resetForm() {
+                    this.form = {
+                        title: '',
+                        timeSpent: '',
+                        status: 'completed',
+                        notes: ''
+                    };
+                    this.editingRecord = null;
+                },
+
+                async loadData() {
+                    this.loadingRecords = true;
+                    try {
+                        const [recordsResult, stats] = await Promise.all([
+                            this.mathAPI.getRecords(),
+                            this.mathAPI.getStats()
+                        ]);
+
+                        this.records = recordsResult;
+                        this.stats = stats;
+
+                    } catch (error) {
+                        console.error('加载数据失败:', error);
+                    } finally {
+                        this.loadingRecords = false;
+                    }
+                },
+
+                async syncData() {
+                    await this.loadData();
+                },
+
+                async clearAllRecords() {
+                    if (confirm('确定要清空所有学习记录吗？此操作不可恢复！')) {
+                        try {
+                            await this.mathAPI.clearAllRecords();
+                            alert('所有记录已清空！');
+                            await this.loadData();
+                        } catch (error) {
+                            alert('清空失败，请检查网络连接！');
+                            console.error(error);
+                        }
+                    }
+                },
+
+                // 辅助方法
+                formatDate(dateString) {
+                    return new Date(dateString).toLocaleString('zh-CN');
+                },
+
+                getStatusStyle(status) {
+                    const styles = {
+                        'completed': 'bg-green-100 text-green-800',
+                        'stuck': 'bg-red-100 text-red-800',
+                        'review': 'bg-yellow-100 text-yellow-800'
+                    };
+                    return styles[status] || '';
+                },
+
+                getStatusText(status) {
+                    const texts = {
+                        'completed': '完成',
+                        'stuck': '卡住',
+                        'review': '复习'
+                    };
+                    return texts[status] || status;
+                }
+            },
+
+            async mounted() {
+                // 初始化设备ID
+                this.currentDeviceId = this.getDefaultDeviceId();
+                this.deviceIdInput = this.currentDeviceId;
+                this.mathAPI = new MathStudyAPI(this.currentDeviceId);
+
+                // 加载数据
+                await this.loadData();
+            }
+        }).mount('#app');
     </script>
 </body>
+
 </html>
