@@ -8,3 +8,5 @@ icon: 'mdi:home'
 [源码地址](https://github.com/sxh705/sxh705.github.io)
 
 [部署地址](https://sxh705.github.io/)
+
+[晋ICP备2025067132号](https://beian.miit.gov.cn/)
